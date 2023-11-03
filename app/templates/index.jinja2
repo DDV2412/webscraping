@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content=Pyramid Web Application">
+    <meta name="author" content="DDV">
+    <title>Submission Database</title>
+    <link href="{{request.static_url('app:static/styles.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <div class="container header">
+            <h1>Submission Database</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="table-data">
+                <div class="panels">
+                    <div class="table-header">
+                        <form class="field-wrap" id="search">
+                            <div class="field">
+                                <input class="field-search" id="search-input" placeholder="Search with Title or ID..."/>
+                                <button class="button-search">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 21L15.8033 15.8033M15.8033 15.8033C17.1605 14.4461 18 12.5711 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18C12.5711 18 14.4461 17.1605 15.8033 15.8033Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                        <div class="sort-field">
+                            <button class="button">Sync Data</button>
+                            <select id="page-order">
+                                <option>15</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-submission">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="index">ID</th>
+                                    <th>Title</th>
+                                    <th>Journal Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for submission in content.submissions%}
+                                    <tr>
+                                        <td class="index">{{submission.submission_id}}</td>
+                                        <td>{{submission.title}}<br/> 
+                                        </td>
+                                        <td>{{submission.journal_name}}</td>
+                                    </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div> 
+                    <div class="table-footer">
+                        <p>Showing {{content.current_page}}-{{content.total_pages}} of {{content.total}} results</p>
+                        <div class="pagination">
+                            <button class="prev" id="prevBtn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19.5 12L4.5 12M4.5 12L11.25 18.75M4.5 12L11.25 5.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg></button>
+                            <button class="next" id="nextBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M4.5 12L19.5 12M19.5 12L12.75 5.25M19.5 12L12.75 18.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+<script src="{{request.static_url('app:static/main.js')}}"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+/* Root Font Size */
+:root {
+  font-size: 16px;
+}
+
+/* Custom Font */
+@font-face {
+  font-family: 'Walsheim';
+  src: url('/static/font/walsheim-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Walsheim';
+  src: url('/static/font/walsheim-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Body Styles */
+body {
+  font-family: 'Walsheim';
+  font-size: 1rem;
+  font-weight: 400;
+  color: #020617;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container Styles */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header Styles */
+header {
+  padding: 1rem 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Button Styles */
+button,
+.button {
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #64748b;
+  background-color: transparent;
+}
+
+.button {
+  padding: 0.875rem 1.5rem;
+  font-family: 'Walsheim';
+  background-color: #2563eb;
+  color: #fff;
+}
+
+/* Tabs Styles */
+.table-data {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Tab Panels Styles */
+.panels {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 640px) {
+  .table-header {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .sort-field {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .header {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* Form Field Styles */
+.field-wrap {
+  width: 100%;
+  max-width: 500px;
+}
+
+.sort-field {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+select,
+input {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  outline: none;
+  border: 1px solid #cbd5e1;
+  font-family: 'Walsheim';
+}
+
+.field-search {
+  width: 100%;
+}
+
+.field {
+  position: relative;
+}
+
+.button-search {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+/* Table Styles */
+.table-submission {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  background-color: #e2e8f0;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+
+th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f1f5f9;
+}
+
+.index {
+  width: 80px;
+}
+
+/* Table Footer Styles */
+.table-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.prev,
+.next {
+  padding: 0.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 0.5rem;
+  color: #020617;
+  background-color: #e2e8f0;
+}
