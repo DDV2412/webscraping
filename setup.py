@@ -19,10 +19,8 @@ requires = [
     "pyramid_jinja2",
     "marshmallow",
     "requests",
-    "schedule",
     "mongoengine",
     "beautifulsoup4",
-    "schedule",
 ]
 
 tests_require = [

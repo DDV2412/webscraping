@@ -40,31 +40,26 @@ class SubmissionRepo:
 
         aggr_journal = list(self.collection.aggregate(pipeline_journal))
 
+        if duplicate:
+            duplicate_titles_pipeline = [
+                {"$group": {"_id": {"$toLower": "$title"}, "count": {"$sum": 1}}},
+                {"$match": {"count": {"$gt": 1}}},
+            ]
+
+            duplicate_titles = list(
+                self.collection.aggregate(duplicate_titles_pipeline)
+            )
+
+            duplicate_title_values = [item["_id"] for item in duplicate_titles]
+
+            query["title"] = {"$in": duplicate_title_values}
+
         submissions = list(self.collection.find(query).skip(offset).limit(pageShow))
         for submission in submissions:
             submission["_id"] = str(submission["_id"])
 
         total_submissions = self.collection.count_documents(query)
-
         total_pages = (total_submissions + pageShow - 1) // pageShow
-
-        if duplicate:
-            duplicate_titles = self.collection.aggregate(
-                [
-                    {"$match": query},
-                    {"$group": {"_id": {"$toLower": "$title"}, "count": {"$sum": 1}}},
-                    {"$match": {"count": {"$gt": 1}}},
-                ]
-            )
-            duplicate_titles = [doc["_id"] for doc in duplicate_titles]
-
-            query["title"] = {"$in": [title for title in duplicate_titles]}
-            submissions = list(self.collection.find(query).skip(offset).limit(pageShow))
-            for submission in submissions:
-                submission["_id"] = str(submission["_id"])
-
-            total_submissions = len(submissions)
-            total_pages = (total_submissions + pageShow - 1) // pageShow
 
         return {
             "submissions": submissions,

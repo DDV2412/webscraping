@@ -19,6 +19,6 @@ class SubmissionService:
                 return
         else:
             try:
-                return
+                return self.submission.create_submission(submission)
             except Exception as e:
                 return
