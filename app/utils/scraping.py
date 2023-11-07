@@ -50,7 +50,11 @@ class JournalScraper:
                     authors_div = review_soup.find("div", id="authors")
                     author_entries = authors_div.find_all("tr", valign="top")
 
-                    authors_list = []
+                    authors_div = review_soup.find("div", id="authors")
+                    author_entries = authors_div.find_all("tr", valign="top")
+
+                    authors_list = set()
+
                     for author_entry in author_entries:
                         author_name_element = author_entry.find(
                             "td", class_="label", string="Name"
@@ -63,7 +67,7 @@ class JournalScraper:
                                 author_value.text.strip() if author_value else "N/A"
                             )
                         else:
-                            affiliate = "N/A"
+                            author_name = "N/A"
 
                         affiliate_element = author_entry.find(
                             "td", class_="label", string="Affiliation"
@@ -79,11 +83,9 @@ class JournalScraper:
                             )
                         else:
                             affiliate = "N/A"
-                        author_info = {
-                            "name": author_name,
-                            "affiliation": affiliate,
-                        }
-                        authors_list.append(author_info)
+
+                        author_info = (author_name, affiliate)
+                        authors_list.add(author_info)
 
                     title_element = review_soup.find(
                         "td", class_="label", string="Title"

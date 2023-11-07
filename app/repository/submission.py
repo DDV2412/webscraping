@@ -20,13 +20,11 @@ class SubmissionRepo:
         offset = (page - 1) * pageShow
 
         search_criteria = {}
-        search_criteria["$or"] = [
-            {"title": {"$regex": f"^{search}$", "$options": "i"}} if search else None,
-            {"submission_id": search} if search else None,
-        ]
-
-        if not any(search_criteria["$or"]):
-            del search_criteria["$or"]
+        if search:
+            search_criteria["$or"] = [
+                {"title": {"$regex": f".*{search}.*", "$options": "i"}},
+                {"submission_id": search},
+            ]
 
         query = {}
 

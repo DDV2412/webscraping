@@ -61,6 +61,9 @@
                                     <tr>
                                         <td class="index">{{submission.submission_id}}</td>
                                         <td>{{submission.title}}<br/> 
+                                            {% for author in submission.authors%}
+                                                <span>{{author.name}},</span>
+                                            {%endfor%}
                                         </td>
                                         <td>{{submission.journal_name}}</td>
                                     </tr>
