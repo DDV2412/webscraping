@@ -12,7 +12,7 @@ class JournalScraper:
         response = self.session.post(login_url, data=payload)
         return response.ok
 
-    def scrape_data(self, base_url, name):
+    def scrape_data(self, base_url, name_journal):
         scraped_data = []
         cookies = self.session.cookies.get_dict()
 
@@ -102,7 +102,7 @@ class JournalScraper:
                         "authors": authors_list,
                         "title": title,
                         "abstract": abstract,
-                        "journal_name": name,
+                        "journal_name": name_journal,
                     }
 
                     scraped_data.append(submission_data)
