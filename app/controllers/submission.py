@@ -34,28 +34,67 @@ class Submission:
 
         journal_lists = [
             {
+                "url": "https://iaesprime.com/index.php/csit",
+                "journal_name": "Computer Science and Information Technologies",
+                "payload": {"username": "cmedia", "password": "254#@#@778&%"},
+            },
+            {
                 "url": "https://ijece.iaescore.com/index.php/IJECE",
                 "journal_name": "International Journal of Electrical and Computer Engineering (IJECE)",
+                "payload": {"username": "ijecemedia", "password": "254#@#@778&%"},
             },
             {
                 "url": "https://ijeecs.iaescore.com/index.php/IJEECS",
                 "journal_name": "Indonesian Journal of Electrical Engineering and Computer Science",
+                "payload": {"username": "ijecemedia", "password": "254#@#@778&%$"},
             },
             {
-                "url": "https://iaesprime.com/index.php/csit",
-                "journal_name": "Computer Science and Information Technologies",
+                "url": "https://ijaas.iaescore.com/index.php/IJAAS",
+                "journal_name": "International Journal of Advances in Applied Sciences",
+                "payload": {"username": "imedia", "password": "254#@#@778&%"},
+            },
+            {
+                "url": "https://ijict.iaescore.com/index.php/IJICT",
+                "journal_name": "International Journal of Informatics and Communication Technology (IJ-ICT)",
+                "payload": {"username": "imedia", "password": "254#@#@778&%"},
+            },
+            {
+                "url": "https://ijres.iaescore.com/index.php/IJRES",
+                "journal_name": "International Journal of Reconfigurable and Embedded Systems (IJRES)",
+                "payload": {"username": "imedia", "password": "254#@#@778&%"},
+            },
+            {
+                "url": "https://ijra.iaescore.com/index.php/IJRA",
+                "journal_name": "IAES International Journal of Robotics and Automation (IJRA)",
+                "payload": {"username": "imedia", "password": "254#@#@778&%"},
+            },
+            {
+                "url": "https://www.beei.org/index.php/EEI",
+                "journal_name": "Bulletin of Electrical Engineering and Informatics",
+                "payload": {"username": "ijecemedia", "password": "254#@#@778&%$"},
+            },
+            {
+                "url": "https://ijai.iaescore.com/index.php/IJAI",
+                "journal_name": "IAES International Journal of Artificial Intelligence (IJ-AI)",
+                "payload": {"username": "ddv", "password": "254#@#@778&%"},
+            },
+            {
+                "url": "https://ijpeds.iaescore.com/index.php/IJPEDS",
+                "journal_name": "International Journal of Power Electronics and Drive Systems (IJPEDS)",
+                "payload": {"username": "ddv", "password": "254#@#@778&%"},
+            },
+            {
+                "url": "http://telkomnika.uad.ac.id/index.php/TELKOMNIKA",
+                "journal_name": "TELKOMNIKA (Telecommunication Computing Electronics and Control)",
+                "payload": {"username": "ijecemedia", "password": "254#@#@778&%$"},
             },
         ]
 
-        scraper = JournalScraper(journal_lists)
+        for journal in journal_lists:
+            scraper = JournalScraper(journal)
+            scraper_data = scraper.run()
 
-        scraper_data = scraper.run()
-
-        for submission in scraper_data:
-            data = self.submission_service.create_or_update_submission(submission)
-
-            submissions.append(data)
-
-        return Response(
-            json_body={"status": "success", "data": submissions}, status_code=200
-        )
+            for submission in scraper_data:
+                self.submission_service.create_or_update_submission(submission)
+            print(f"Success {journal['journal_name']}")
+        return Response(json_body={"status": "success"}, status_code=200)

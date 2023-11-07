@@ -4,14 +4,12 @@ import re
 
 
 class JournalScraper:
-    LOGIN_PAYLOAD = {"username": "dian", "password": "24121997"}
-
-    def __init__(self, journal_list):
-        self.journal_list = journal_list
+    def __init__(self, journal):
+        self.journal = journal
         self.session = requests.Session()
 
-    def login(self, login_url):
-        response = self.session.post(login_url, data=self.LOGIN_PAYLOAD)
+    def login(self, login_url, payload):
+        response = self.session.post(login_url, data=payload)
         return response.ok
 
     def scrape_data(self, base_url, name):
@@ -113,15 +111,13 @@ class JournalScraper:
 
     def run(self):
         all_scraped_data = []
-        for journal_link in self.journal_list:
-            login_url = f"{journal_link['url']}/login/signIn"
-            if self.login(login_url):
-                target_url = f"{journal_link['url']}"
-                scraped_data = self.scrape_data(
-                    target_url, journal_link["journal_name"]
-                )
-                all_scraped_data.extend(scraped_data)
-            else:
-                print(f"Failed to log in to {journal_link['journal_name']}.")
+        login_url = f"{self.journal['url']}/login/signIn"
+        payload = self.journal.get("payload", {})
+        if self.login(login_url, payload):
+            target_url = f"{self.journal['url']}"
+            scraped_data = self.scrape_data(target_url, self.journal["journal_name"])
+            all_scraped_data.extend(scraped_data)
+        else:
+            print(f"Failed to log in to {self.journal['journal_name']}.")
 
         return all_scraped_data
