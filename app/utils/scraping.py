@@ -47,43 +47,49 @@ class JournalScraper:
                     review_response = requests.get(modified_url, cookies=cookies)
                     review_soup = BeautifulSoup(review_response.content, "html.parser")
 
+           
                     authors_div = review_soup.find("div", id="authors")
+
                     author_entries = authors_div.find_all("tr", valign="top")
 
-                    authors_div = review_soup.find("div", id="authors")
-                    author_entries = authors_div.find_all("tr", valign="top")
+         
+                    authors_set = set()
 
-                    authors_list = set()
-
+                    author_lists = []
+                
                     for author_entry in author_entries:
-                        author_name_element = author_entry.find(
-                            "td", class_="label", string="Name"
-                        )
+                        author_name_element = author_entry.find("td", class_="label", string="Name")
+                        
                         if author_name_element:
-                            author_value = author_name_element.find_next(
-                                "td", class_="value"
-                            )
-                            name = author_value.text.strip() if author_value else "N/A"
+                            author_value = author_name_element.find_next("td", class_="value")
+                            name = author_value.text.strip() if author_value else None
                         else:
-                            name = "N/A"
+                            name = None
 
-                        affiliate_element = author_entry.find(
-                            "td", class_="label", string="Affiliation"
-                        )
+                        affiliate_element = author_entry.find("td", class_="label", string="Affiliation")
+                        
                         if affiliate_element:
-                            affiliate_value = affiliate_element.find_next(
-                                "td", class_="value"
-                            )
-                            affiliate = (
-                                affiliate_value.text.strip()
-                                if affiliate_value
-                                else "N/A"
-                            )
+                            affiliate_value = affiliate_element.find_next("td", class_="value")
+                            affiliation = affiliate_value.text.strip() if affiliate_value else None
                         else:
-                            affiliate = "N/A"
+                            affiliation = None
 
-                        author_info = (name, affiliate)
-                        authors_list.add(author_info)
+
+                        authors_set.add((name, affiliation))
+
+
+                    authors_list = list(authors_set)
+
+                    filtered_data = [(name, affiliation) for name, affiliation in authors_list if name is not None]
+
+                    for name, affiliation in filtered_data:
+                        data = {
+                            "name" : name,
+                            "affiliation": affiliation
+                        }
+
+                        author_lists.append(data)
+
 
                     title_element = review_soup.find(
                         "td", class_="label", string="Title"
@@ -99,7 +105,7 @@ class JournalScraper:
 
                     submission_data = {
                         "submission_id": submission_id,
-                        "authors": authors_list,
+                        "authors": author_lists,
                         "title": title,
                         "abstract": abstract,
                         "journal_name": name_journal,
