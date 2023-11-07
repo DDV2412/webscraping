@@ -63,11 +63,9 @@ class JournalScraper:
                             author_value = author_name_element.find_next(
                                 "td", class_="value"
                             )
-                            author_name = (
-                                author_value.text.strip() if author_value else "N/A"
-                            )
+                            name = author_value.text.strip() if author_value else "N/A"
                         else:
-                            author_name = "N/A"
+                            name = "N/A"
 
                         affiliate_element = author_entry.find(
                             "td", class_="label", string="Affiliation"
@@ -84,7 +82,7 @@ class JournalScraper:
                         else:
                             affiliate = "N/A"
 
-                        author_info = (author_name, affiliate)
+                        author_info = (name, affiliate)
                         authors_list.add(author_info)
 
                     title_element = review_soup.find(
