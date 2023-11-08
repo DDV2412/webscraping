@@ -17,6 +17,7 @@ class Submission(Document):
             "title": self.title,
             "journal_name": self.journal_name,
             "authors": self.authors,
+            "date_submitted": self.date_submitted,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }

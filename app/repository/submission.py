@@ -1,4 +1,5 @@
 import re
+import pymongo
 from pyramid.request import Request
 
 
@@ -53,7 +54,12 @@ class SubmissionRepo:
 
             query = {"title": {"$in": regex_patterns}}
 
-        submissions = list(self.collection.find(query).skip(offset).limit(pageShow).sort("title", pymongo.ASCENDING))
+        submissions = list(
+            self.collection.find(query)
+            .skip(offset)
+            .limit(pageShow)
+            .sort("title", pymongo.ASCENDING)
+        )
         for submission in submissions:
             submission["_id"] = str(submission["_id"])
 
