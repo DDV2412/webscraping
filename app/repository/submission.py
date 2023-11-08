@@ -62,7 +62,7 @@ class SubmissionRepo:
             "submissions": submissions,
             "aggrs": {
                 "journal": aggr_journal,
-                "duplicate: duplicate_titles,
+                "duplicate": duplicate_title_values,
             },
             "total": total_submissions,
             "current_page": page,
