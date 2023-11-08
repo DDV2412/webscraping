@@ -49,6 +49,8 @@ class SubmissionRepo:
             )
 
             duplicate_title_values = [item["_id"] for item in duplicate_titles]
+
+            print(duplicate_titles)
             query["title"] = {"$in": duplicate_title_values}
 
         submissions = list(self.collection.find(query).skip(offset).limit(pageShow))
