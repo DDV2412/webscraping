@@ -84,6 +84,21 @@ class Submission:
                 "payload": {"username": "ddv", "password": "254#@#@778&%"},
             },
             {
+                "url": "https://ijape.iaescore.com/index.php/IJAPE",
+                "journal_name": "International Journal of Applied Power Engineering (IJAPE)",
+                "payload": {"username": "ijecemedia", "password": "254#@#@778&%$"},
+            },
+            {
+                "url": "https://ijere.iaescore.com/index.php/IJERE",
+                "journal_name": "International Journal of Evaluation and Research in Education (IJERE)",
+                "payload": {"username": "imedia", "password": "254#@#@778&%"},
+            },
+            {
+                "url": "https://edulearn.intelektual.org/index.php/EduLearn",
+                "journal_name": "Journal of Education and Learning (EduLearn)",
+                "payload": {"username": "emedia", "password": "254#@#@778&%$"},
+            },
+            {
                 "url": "http://telkomnika.uad.ac.id/index.php/TELKOMNIKA",
                 "journal_name": "TELKOMNIKA (Telecommunication Computing Electronics and Control)",
                 "payload": {"username": "ijecemedia", "password": "254#@#@778&%$"},
