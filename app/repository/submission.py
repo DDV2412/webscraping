@@ -48,7 +48,7 @@ class SubmissionRepo:
                 self.collection.aggregate(duplicate_titles_pipeline)
             )
 
-            duplicate_title_values = [item["_id"] for item in duplicate_titles_result]
+            duplicate_title_values = [item["_id"] for item in duplicate_titles]
             query["title"] = {"$in": duplicate_title_values}
 
         submissions = list(self.collection.find(query).skip(offset).limit(pageShow))
