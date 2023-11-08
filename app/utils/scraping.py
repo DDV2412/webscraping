@@ -47,71 +47,45 @@ class JournalScraper:
                     review_response = requests.get(modified_url, cookies=cookies)
                     review_soup = BeautifulSoup(review_response.content, "html.parser")
 
-           
-                    authors_div = review_soup.find("div", id="authors")
+                    submission_element = review_soup.find("div", id="submission")
 
-                    author_entries = authors_div.find_all("tr", valign="top")
+                    if submission_element:
+                        title_element = submission_element.find(
+                            "td", class_="label", string="Title"
+                        )
+                        title = (
+                            title_element.find_next("td", class_="value").text.strip()
+                            if title_element
+                            else None
+                        )
 
-         
-                    authors_set = set()
+                        authors_element = submission_element.find(
+                            "td", class_="label", string="Authors"
+                        )
+                        authors = (
+                            authors_element.find_next("td", class_="value").text.strip()
+                            if authors_element
+                            else None
+                        )
 
-                    author_lists = []
-                
-                    for author_entry in author_entries:
-                        author_name_element = author_entry.find("td", class_="label", string="Name")
-                        
-                        if author_name_element:
-                            author_value = author_name_element.find_next("td", class_="value")
-                            name = author_value.text.strip() if author_value else None
-                        else:
-                            name = None
+                        date_submitted_element = submission_element.find(
+                            "td", class_="label", string="Date submitted"
+                        )
+                        date_submitted = (
+                            date_submitted_element.find_next("td").text.strip()
+                            if date_submitted_element
+                            else None
+                        )
 
-                        affiliate_element = author_entry.find("td", class_="label", string="Affiliation")
-                        
-                        if affiliate_element:
-                            affiliate_value = affiliate_element.find_next("td", class_="value")
-                            affiliation = affiliate_value.text.strip() if affiliate_value else None
-                        else:
-                            affiliation = None
-
-
-                        authors_set.add((name, affiliation))
-
-
-                    authors_list = list(authors_set)
-
-                    filtered_data = [(name, affiliation) for name, affiliation in authors_list if name is not None]
-
-                    for name, affiliation in filtered_data:
-                        data = {
-                            "name" : name,
-                            "affiliation": affiliation
+                        submission_data = {
+                            "submission_id": submission_id,
+                            "title": title,
+                            "authors": authors,
+                            "date_submitted": date_submitted,
+                            "journal_name": name_journal,
                         }
 
-                        author_lists.append(data)
-
-
-                    title_element = review_soup.find(
-                        "td", class_="label", string="Title"
-                    )
-                    title = title_element.find_next("td", class_="value").text.strip()
-
-                    abstract_element = review_soup.find(
-                        "td", class_="label", string="Abstract"
-                    )
-                    abstract = abstract_element.find_next(
-                        "td", class_="value"
-                    ).text.strip()
-
-                    submission_data = {
-                        "submission_id": submission_id,
-                        "authors": author_lists,
-                        "title": title,
-                        "abstract": abstract,
-                        "journal_name": name_journal,
-                    }
-
-                    scraped_data.append(submission_data)
+                        scraped_data.append(submission_data)
 
         return scraped_data
 

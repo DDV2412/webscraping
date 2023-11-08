@@ -32,13 +32,6 @@ class SubmissionRepo:
         if search_criteria:
             query.update(search_criteria)
 
-        pipeline_journal = [
-            {"$group": {"_id": "$journal_name", "count": {"$sum": 1}}},
-            {"$match": {"count": {"$gt": 1}}},
-        ]
-
-        aggr_journal = list(self.collection.aggregate(pipeline_journal))
-
         duplicate_title_values = []
 
         if duplicate:
@@ -69,9 +62,6 @@ class SubmissionRepo:
 
         return {
             "submissions": submissions,
-            "aggrs": {
-                "journal": aggr_journal,
-            },
             "total": total_submissions,
             "current_page": page,
             "total_pages": total_pages,
