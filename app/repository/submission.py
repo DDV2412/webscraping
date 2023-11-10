@@ -72,3 +72,7 @@ class SubmissionRepo:
             "current_page": page,
             "total_pages": total_pages,
         }
+
+    def delete_all_submissions(self):
+        deleted_count = self.collection.delete_many({})
+        return deleted_count.deleted_count

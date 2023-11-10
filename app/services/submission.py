@@ -22,3 +22,6 @@ class SubmissionService:
                 return self.submission.create_submission(submission)
             except Exception as e:
                 return
+
+    def delete_all_submissions(self):
+        return self.submission.delete_all_submissions()

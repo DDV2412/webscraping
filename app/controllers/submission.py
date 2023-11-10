@@ -30,6 +30,7 @@ class Submission:
 
     @view_config(route_name="automation", renderer="json")
     def scheduled(self):
+        self.submission_service.delete_all_submissions()
         submissions = []
 
         journal_lists = [
